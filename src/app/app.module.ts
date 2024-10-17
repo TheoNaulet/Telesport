@@ -10,8 +10,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';  // Importer FontAwesome
 
 @NgModule({
-  declarations: [AppComponent, DetailComponent, NotFoundComponent],
-  imports: [BrowserModule, AppRoutingModule, NgxChartsModule, HomeComponent, FontAwesomeModule, HttpClientModule],
+  declarations: [AppComponent, NotFoundComponent],
+  imports: [BrowserModule, AppRoutingModule, NgxChartsModule, HomeComponent, DetailComponent, FontAwesomeModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,27 +1,34 @@
 <div class="detail-container">
     <button class="back-button" (click)="goBack()"><--</button>
-    <h2 class="country-name">Name of the country</h2>
+    <h2 class="country-name">{{countryName}}</h2>
     <div class="statistics">
-      <div class="stat">
-        <p class="stat-title">Number of entries</p>
-        <p class="stat-value">3</p>
-      </div>
-      <div class="stat">
-        <p class="stat-title">Total number medals</p>
-        <p class="stat-value">5</p>
-      </div>
-      <div class="stat">
-        <p class="stat-title">Total number of athletes</p>
-        <p class="stat-value">32</p>
-      </div>
+        <div class="stat">
+            <p class="stat-title">Number of entries</p>
+            <p class="stat-value">{{ numberOfEntries}}</p>
+        </div>
+        <div class="stat">
+            <p class="stat-title">Total number medals</p>
+            <p class="stat-value">{{ totalMedals}}</p>
+        </div>
+        <div class="stat">
+            <p class="stat-title">Total number of athletes</p>
+            <p class="stat-value">{{ totalAthletes}}</p>
+        </div>
     </div>
-  
-    <div class="chart-container">
-      <div class="chart-placeholder">
-        <p>Chart</p>
-      </div>
+    <div class="chart">
+        <ngx-charts-line-chart
+        [view]="[700, 400]"
+        [results]="chartData"
+        [legend]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Dates'"
+        [yAxisLabel]="'Number of medals'"
+        [autoScale]="true"
+        [yScaleMin]="-10" 
+        [yScaleMax]="200"   
+        [timeline]="false"/>
     </div>
-  
-    <p class="chart-caption">Dates</p>
-  </div>
-  
+</div>
