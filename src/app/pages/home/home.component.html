@@ -10,9 +10,14 @@
             <p class="stat-value">{{ numberOfCountries }}</p>
         </div>
     </div>
-    <button (click)="goToDetail()">Go to Detail Page</button>
     <div class="chart">
-        <div class="pie-chart">
-        </div>
-    </div>
+    <ngx-charts-pie-chart [view]="[700, 400]" [results]="chartData" [labels]="true" [trimLabels]="false" [animations]="false" (select)="onSelect($event)">
+        <ng-template #tooltipTemplate let-model="model">
+            <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
+            <br>
+            <fa-icon [icon]="faMedal" class="p-2" style="font-size: large;"></fa-icon>
+            <span style="font-weight: bold; font-size: large;">{{model.value}}</span>
+        </ng-template>
+    </ngx-charts-pie-chart>
+</div>
 </div>
