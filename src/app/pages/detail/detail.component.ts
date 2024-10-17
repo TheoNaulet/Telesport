@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-detail',
@@ -7,5 +9,9 @@ import { Component } from '@angular/core';
 })
 
 export class DetailComponent {
+  constructor(private router: Router ) {}
 
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 }

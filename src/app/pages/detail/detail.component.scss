@@ -3,6 +3,16 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: transparent;
+        border: none;
+        font-size: 24px;
+        color: #31707f;
+        cursor: pointer;
+    }
     .country-name {
         font-size: 24px;
         font-weight: bold;
