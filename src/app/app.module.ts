@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/detail/detail.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';  // Importer FontAwesome
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, DetailComponent, NotFoundComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [AppComponent, DetailComponent, NotFoundComponent],
+  imports: [BrowserModule, AppRoutingModule, NgxChartsModule, HomeComponent, FontAwesomeModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
