@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+    .tooltip-caret.position-top {
+      border-top-color: rgb(1, 131, 143);
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    }
+    padding: 10px 20px;
+    background-color: rgb(1, 131, 143);
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  }
