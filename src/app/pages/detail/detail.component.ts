@@ -27,7 +27,7 @@ export class DetailComponent {
     this.olympicService.getOlympics().subscribe((data) => {
       this.olympics = data; 
       this.countryName = this.router.url.split('/').pop() || ''; 
-      this.countryName = this.countryName.charAt(0).toUpperCase() + this.countryName.slice(1);
+      this.countryName = decodeURIComponent(this.countryName).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
       this.country = this.getDataByCountry(this.countryName);
       this.numberOfEntries = this.getNumberOfEntries(this.country[0]);
       this.totalMedals = this.getTotalNumberOfMedals(this.country[0]);
@@ -37,7 +37,9 @@ export class DetailComponent {
   }
 
   getDataByCountry(countryName: string): any {
-    return this.olympics.filter(olympic => olympic.country == countryName);
+    const decodedCountryName = decodeURIComponent(countryName);
+    return this.olympics.filter(olympic => olympic.country.toLowerCase() === decodedCountryName.toLowerCase());
+
   }
 
   getNumberOfEntries(country: any): number {
