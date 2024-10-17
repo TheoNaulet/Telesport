@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
@@ -9,7 +12,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
   standalone: true,
-  imports: [NgxChartsModule]
+ 
+  imports: [NgxChartsModule, FontAwesomeModule]
 })
 
 export class DetailComponent {
@@ -20,7 +24,7 @@ export class DetailComponent {
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
   public chartData: Array<any> = [];
-
+  public faArrowLeft = faArrowLeft;
   constructor(private olympicService: OlympicService, private router : Router) {}
 
   ngOnInit(): void {
