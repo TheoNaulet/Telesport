@@ -1,31 +1,81 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
-  private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympicUrl = './assets/mock/olympic.json';  // URL to the mock JSON data
+
+  // BehaviorSubject to hold the data or null if no data is available
+  private olympics$ = new BehaviorSubject<any | null>(null);
+  // BehaviorSubject to hold loading status
+  private loading$ = new BehaviorSubject<boolean>(false);
+  // BehaviorSubject to hold error messages
+  private error$ = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData() {
+  /**
+   * Loads initial Olympic data from a mock JSON file and stores it in a BehaviorSubject.
+   * Handles loading states and errors during the process.
+   */
+  loadInitialData(): Observable<any | null> {
+    this.loading$.next(true);  // Set loading state to true when starting the data fetch
+
     return this.http.get<any>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling
-        console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
-        return caught;
+      tap((data: any) => {
+        this.olympics$.next(data);   // Push the received data to the BehaviorSubject
+        this.loading$.next(false);   // Set loading state to false after successful fetch
+        this.error$.next(null);      // Clear any existing errors
+      }),
+      catchError((error) => {
+        this.loading$.next(false);   // Set loading state to false when error occurs
+        const errorMsg = this.getErrorMessage(error);  // Extract error message
+        this.error$.next(errorMsg);   // Push the error message to the error BehaviorSubject
+        console.error('Error loading Olympic data:', errorMsg);
+        return throwError(() => new Error(errorMsg));  // Re-throw the error with a clear message
       })
     );
   }
 
-  getOlympics() {
+  /**
+   * Returns the Olympic data as an observable.
+   * This data is stored in a BehaviorSubject, so it can emit the current value or future updates.
+   */
+  getOlympics(): Observable<any | null> {
     return this.olympics$.asObservable();
+  }
+
+  /**
+   * Returns the loading state as an observable.
+   * Components can subscribe to this to show/hide loading indicators.
+   */
+  isLoading(): Observable<boolean> {
+    return this.loading$.asObservable();
+  }
+
+  /**
+   * Returns the error state as an observable.
+   * Components can subscribe to this to display error messages to the user.
+   */
+  getError(): Observable<string | null> {
+    return this.error$.asObservable();
+  }
+
+  /**
+   * Extracts and returns a human-readable error message from an HTTP error response.
+   * You can customize this method to handle different error scenarios.
+   */
+  private getErrorMessage(error: any): string {
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error (e.g., network issues)
+      return `Client-side error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      return `Server-side error: ${error.status} - ${error.message}`;
+    }
   }
 }
