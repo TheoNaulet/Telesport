@@ -1,35 +1,45 @@
 <div class="detail-container">
-    <a class="back-button" (click)="goBack()"><fa-icon [icon]="faArrowLeft" class="p-2" style="font-size: large;"></fa-icon>
+    <a class="back-button" (click)="goBack()">
+      <fa-icon [icon]="faArrowLeft" class="p-2" style="font-size: large;"></fa-icon>
     </a>
-    <h2 class="country-name">{{countryName}}</h2>
-    <div class="statistics">
+    <h2 class="country-name">{{ countryName }}</h2>
+  
+    <ng-container *ngIf="country; else noDataTemplate">
+      <div class="statistics">
         <div class="stat">
-            <p class="stat-title">Number of entries</p>
-            <p class="stat-value">{{ numberOfEntries}}</p>
+          <p class="stat-title">Number of entries</p>
+          <p class="stat-value">{{ numberOfEntries }}</p>
         </div>
         <div class="stat">
-            <p class="stat-title">Total number medals</p>
-            <p class="stat-value">{{ totalMedals}}</p>
+          <p class="stat-title">Total number medals</p>
+          <p class="stat-value">{{ totalMedals }}</p>
         </div>
         <div class="stat">
-            <p class="stat-title">Total number of athletes</p>
-            <p class="stat-value">{{ totalAthletes}}</p>
+          <p class="stat-title">Total number of athletes</p>
+          <p class="stat-value">{{ totalAthletes }}</p>
         </div>
-    </div>
-    <div class="chart">
+      </div>
+      <div class="chart">
         <ngx-charts-line-chart
-        [view]="[700, 400]"
-        [results]="chartData"
-        [legend]="false"
-        [xAxis]="true"
-        [yAxis]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Dates'"
-        [yAxisLabel]="'Number of medals'"
-        [autoScale]="true"
-        [yScaleMin]="-10" 
-        [yScaleMax]="200"   
-        [timeline]="false"/>
-    </div>
-</div>
+          [view]="[700, 400]"
+          [results]="chartData"
+          [legend]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Dates'"
+          [yAxisLabel]="'Number of medals'"
+          [autoScale]="true"
+          [yScaleMin]="-10"
+          [yScaleMax]="200"
+          [timeline]="false"
+        />
+      </div>
+    </ng-container>
+  
+    <ng-template #noDataTemplate>
+      <p class="error-message">No data available for {{ countryName }}.</p>
+    </ng-template>
+  </div>
+  

@@ -12,7 +12,6 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
   standalone: true,
- 
   imports: [NgxChartsModule, FontAwesomeModule]
 })
 
@@ -28,15 +27,27 @@ export class DetailComponent {
   constructor(private olympicService: OlympicService, private router : Router) {}
 
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe((data) => {
-      this.olympics = data; 
-      this.countryName = this.router.url.split('/').pop() || ''; 
-      this.countryName = decodeURIComponent(this.countryName).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-      this.country = this.getDataByCountry(this.countryName);
-      this.numberOfEntries = this.getNumberOfEntries(this.country[0]);
-      this.totalMedals = this.getTotalNumberOfMedals(this.country[0]);
-      this.totalAthletes = this.getTotalNumberOfAthletes(this.country[0]);
-      this.chartData = this.getChartData(this.country[0]);
+    this.olympicService.getOlympics().subscribe({
+      next: (data) => {
+        this.olympics = data; 
+        this.countryName = this.router.url.split('/').pop() || ''; 
+        this.countryName = decodeURIComponent(this.countryName).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+        this.country = this.getDataByCountry(this.countryName);
+  
+        if (this.country.length === 0) {
+          console.error(`No data found for country: ${this.countryName}`);
+          this.country = null;
+          return;
+        }
+  
+        this.numberOfEntries = this.getNumberOfEntries(this.country[0]);
+        this.totalMedals = this.getTotalNumberOfMedals(this.country[0]);
+        this.totalAthletes = this.getTotalNumberOfAthletes(this.country[0]);
+        this.chartData = this.getChartData(this.country[0]);
+      },
+      error: (err) => {
+        console.error('Error occurred:', err);
+      }
     });
   }
 
@@ -71,7 +82,7 @@ export class DetailComponent {
       }
     ];
   }
-  
+
 
   goBack(): void {
     this.router.navigate(['/']);
