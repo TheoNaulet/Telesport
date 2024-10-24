@@ -7,11 +7,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';  // Importer FontAwesome
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
-  imports: [BrowserModule, AppRoutingModule, NgxChartsModule, HomeComponent, DetailComponent, FontAwesomeModule, HttpClientModule],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, NgxChartsModule, HomeComponent, DetailComponent, FontAwesomeModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
