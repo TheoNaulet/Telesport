@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-  public olympics: Olympic[] = []; // Array to store Olympic data
+  public olympics: Country[] = []; // Array to store Olympic data
   public numberOfJOs: number = 0; // Number of Olympic Games (JO in French)
   public numberOfCountries: number = 0; // Number of countries participating
   public chartData: PieChartData[] = []; // Data for the pie chart visualization
@@ -38,12 +38,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Subscribing to the Olympic data and storing the subscription
     this.subscription.add(
-      this.olympicService.getOlympics().subscribe((data: Olympic[]) => {
-        // Once data is received, we populate olympics and calculate stats
-        this.olympics = data;
-        this.numberOfJOs = this.getNumberOfJOs(); // Calculate the number of Olympic Games
-        this.numberOfCountries = this.getNumberOfCountries(); // Calculate the number of participating countries
-        this.chartData = this.getChartData(); // Prepare the pie chart data
+      this.olympicService.getOlympics().subscribe((data: Country[] | null) => {
+        if (data) {
+          this.olympics = data; // 'data' est typé en 'Olympic[]'
+          this.numberOfJOs = this.getNumberOfJOs(); // Calculer le nombre de JO
+          this.numberOfCountries = this.getNumberOfCountries(); // Calculer le nombre de pays participants
+          this.chartData = this.getChartData(); // Préparer les données pour le graphique
+        }
       })
     );
   }
