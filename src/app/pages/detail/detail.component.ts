@@ -34,11 +34,31 @@ export class DetailComponent implements OnInit, OnDestroy {
   public totalAthletes: number = 0; // Total number of athletes for the selected country
   public chartData: LineChartData[] = []; // Data for the line chart
   public faArrowLeft = faArrowLeft; // FontAwesome icon for back arrow
+  public viewWidth: number = 0; // Width of the chart view
   private subscription: Subscription = new Subscription(); // Subscription to manage observables
 
+  /**
+   * Constructor for the component.
+   * 
+   * - Injects the OlympicService to handle the retrieval of Olympic data.
+   * - Injects the Router service to manage navigation within the app.
+   * 
+   * @param {OlympicService} olympicService - Service used to fetch Olympic data.
+   * @param {Router} router - Angular Router used to navigate between routes.
+   */
   constructor(private olympicService: OlympicService, private router: Router) {}
   
+  /**
+   * Lifecycle hook that is called after the component has been initialized.
+   * 
+   * - Updates the chart view based on the screen size.
+   * - Sets up a resize event listener to dynamically update the chart size when the window is resized.
+   * - Retrieves the country name from the current URL.
+   * - Initiates the loading of the initial Olympic data from the service.
+   */
   ngOnInit(): void {
+    this.updateChartView();
+    window.addEventListener('resize', this.updateChartView.bind(this));
     this.countryName = this.getCountryNameFromUrl();
     this.olympicService.loadInitialData().subscribe({
       next: (data) => {
@@ -49,7 +69,16 @@ export class DetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
+  /**
+   * Fetches the data for the country based on the name extracted from the URL.
+   * 
+   * - Subscribes to the service method that retrieves the country data by name.
+   * - If the country is found, updates the component's country-specific properties such as:
+   *   number of entries, total number of medals, total number of athletes, and chart data.
+   * 
+   * @returns {void}
+   */
   getCountryData(): void {
     this.subscription.add(
       this.olympicService.getCountryByName(this.countryName).subscribe({
@@ -58,7 +87,8 @@ export class DetailComponent implements OnInit, OnDestroy {
             console.error(`No data found for country: ${this.countryName}`);
             return;
           }
-  
+
+          // Update component properties with the country's data
           this.country = country;
           this.numberOfEntries = this.getNumberOfEntries(country);
           this.totalMedals = this.getTotalNumberOfMedals(country);
@@ -71,16 +101,46 @@ export class DetailComponent implements OnInit, OnDestroy {
       })
     );
   }
-  
 
+  /**
+   * Updates the chart view's width dynamically based on the current window size.
+   * 
+   * - For screens less than 600px wide (mobile devices), the chart width is set to 90% of the window width.
+   * - For screens between 600px and 1024px (tablets), the chart width is set to 80% of the window width.
+   * - For larger screens (> 1024px), the chart width is set to a fixed 900px.
+   * 
+   * @returns {void}
+   */
+  updateChartView(): void {
+    if (window.innerWidth < 600) {
+      this.viewWidth = window.innerWidth * 0.9;  // For small screens (mobile)
+    } else if (window.innerWidth >= 600 && window.innerWidth <= 1024) {
+      this.viewWidth = window.innerWidth * 0.8;  // For medium screens (tablets)
+    } else {
+      this.viewWidth = 900;  // For large screens (desktops)
+    }
+  }
+
+  /**
+   * Extracts the country name from the current URL, decodes it, 
+   * and formats it by capitalizing the first letter of each word.
+   * 
+   * The method assumes that the country name is the last segment of the URL.
+   * 
+   * @returns {string} The formatted country name extracted from the URL.
+   * 
+   * - Decodes the URL-encoded country name (if it contains special characters).
+   * - Splits the country name by spaces, capitalizes the first letter of each word, and lowercases the rest.
+   * - Joins the words back into a properly formatted country name.
+   */
   private getCountryNameFromUrl(): string {
-  const urlCountryName = this.router.url.split('/').pop() || '';
-  const formattedCountryName = decodeURIComponent(urlCountryName)
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-  return formattedCountryName;
-}
+    const urlCountryName = this.router.url.split('/').pop() || '';
+    const formattedCountryName = decodeURIComponent(urlCountryName)
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+    return formattedCountryName;
+  }
 
   /**
    * Fetch the data for the selected country based on its name.
@@ -154,6 +214,7 @@ export class DetailComponent implements OnInit, OnDestroy {
    * We use it to unsubscribe from any active subscriptions to avoid memory leaks.
    */
   ngOnDestroy(): void {
+    window.removeEventListener('resize', this.updateChartView.bind(this));
     this.subscription.unsubscribe(); // Unsubscribe from the service to clean up
   }
 }
