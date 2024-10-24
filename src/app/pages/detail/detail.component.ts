@@ -5,6 +5,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { StatComponent } from 'src/app/shared/stat/stat.component'; 
+import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component'; // Import du composant PageTitle
+
 
 @Component({
   selector: 'app-detail',
@@ -14,7 +16,8 @@ import { StatComponent } from 'src/app/shared/stat/stat.component';
   imports: [
     NgxChartsModule,    
     FontAwesomeModule,    
-    StatComponent       
+    StatComponent,
+    PageTitleComponent
   ]
 })
 

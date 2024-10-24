@@ -6,6 +6,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 import { StatComponent } from 'src/app/shared/stat/stat.component';
+import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { StatComponent } from 'src/app/shared/stat/stat.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-    imports: [NgIf, NgxChartsModule,  FontAwesomeModule, StatComponent], 
+    imports: [NgIf, NgxChartsModule,  FontAwesomeModule, StatComponent, PageTitleComponent], 
 })
 
 export class HomeComponent implements OnInit {

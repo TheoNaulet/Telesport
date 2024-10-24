@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-page-title',
-  standalone: true,
-  imports: [],
   templateUrl: './page-title.component.html',
-  styleUrl: './page-title.component.scss'
+  styleUrls: ['./page-title.component.scss'],
+  standalone: true
 })
 export class PageTitleComponent {
-
+  @Input() title: string = '';
 }
