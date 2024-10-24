@@ -1,9 +1,14 @@
-export interface ChartSeries {
+export interface PieChartData {
     name: string;
     value: number;
 }
 
-export interface ChartData {
+export interface LineChartSeries {
     name: string;
-    series: ChartSeries[];
+    value: number;
+}
+
+export interface LineChartData {
+    name: string;
+    series: LineChartSeries[];
 }

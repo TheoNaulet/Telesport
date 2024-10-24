@@ -9,7 +9,7 @@ import { PageTitleComponent } from 'src/app/shared/page-title/page-title.compone
 import { Country } from 'src/app/core/models/Country';
 import { Participation } from 'src/app/core/models/Participation';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { ChartData } from 'src/app/core/models/Chart-data';
+import {  LineChartData } from 'src/app/core/models/Chart-data';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class DetailComponent {
   public numberOfEntries: number = 0;
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
-  public chartData: ChartData[] = [];
+  public chartData: LineChartData[] = [];
   public faArrowLeft = faArrowLeft;
   constructor(private olympicService: OlympicService, private router : Router) {}
 
@@ -79,7 +79,7 @@ export class DetailComponent {
     return country.participations.reduce((total: number, participation: { athleteCount: number; }) => total + participation.athleteCount, 0);
   }
 
-  getChartData(country: Country): ChartData[]  {
+  getChartData(country: Country): LineChartData[]  {
     return [
       {
         name: country.country,

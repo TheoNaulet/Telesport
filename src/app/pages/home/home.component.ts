@@ -7,6 +7,10 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 import { StatComponent } from 'src/app/shared/stat/stat.component';
 import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component';
+import {  PieChartData } from 'src/app/core/models/Chart-data';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { Participation } from 'src/app/core/models/Participation';
+import { Country } from 'src/app/core/models/Country';
 
 
 @Component({
@@ -18,10 +22,10 @@ import { PageTitleComponent } from 'src/app/shared/page-title/page-title.compone
 })
 
 export class HomeComponent implements OnInit {
-  public olympics: Array<any> = []; 
+  public olympics: Olympic[]  = []; 
   public numberOfJOs: number = 0;
   public numberOfCountries: number = 0;
-  public chartData: Array<any> = [];
+  public chartData: PieChartData[] = [];
   public faMedal = faMedal;
 
   constructor(private olympicService: OlympicService, private router : Router) {}
@@ -35,11 +39,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getChartData(): Array<any> {
-    return this.olympics.map(country => {
-      const totalMedals = country.participations.reduce((acc: number, participation: any) => {
-        return acc + participation.medalsCount;
-      }, 0);
+  getChartData(): PieChartData[] {
+    return this.olympics.map((country: Country): PieChartData => {
+      const totalMedals = country.participations.reduce(
+        (acc: number, participation: Participation) => acc + participation.medalsCount,
+        0
+      );
 
       return {
         name: country.country,
@@ -47,6 +52,7 @@ export class HomeComponent implements OnInit {
       };
     });
   }
+
 
   getNumberOfCountries(): number {
     return this.olympics.length; 
@@ -56,7 +62,6 @@ export class HomeComponent implements OnInit {
     let yearsOfJOs: number[] = [];
 
     this.olympics.forEach(olympic => {
-      console.log(olympic);
       olympic.participations.forEach((participation: { year: number }) => {
         if (!yearsOfJOs.includes(participation.year)) {
           yearsOfJOs.push(participation.year);
@@ -71,7 +76,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/detail']);
   }
 
-  onSelect(event: any): void {
+  onSelect(event: { name: string }): void {
     const countryName = event.name;
     this.router.navigate(['/detail', countryName.toLowerCase()]);
   }
