@@ -27,7 +27,7 @@ import { Subscription } from 'rxjs';
 
 export class DetailComponent implements OnInit, OnDestroy {
   public olympics: Olympic[] = []; // Array to hold all Olympic data
-  public country: any; // The selected country data
+  public country: Country | null = null; // The selected country data
   public countryName: string = ''; // The name of the selected country
   public numberOfEntries: number = 0; // Total number of entries for the selected country
   public totalMedals: number = 0; // Total number of medals for the selected country
@@ -38,42 +38,49 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   constructor(private olympicService: OlympicService, private router: Router) {}
   
-  /**
-   * Lifecycle hook called when the component is initialized.
-   * Here we subscribe to the OlympicService to fetch Olympic data.
-   */
   ngOnInit(): void {
-    // Subscribing to the Olympic data and storing the subscription
+    this.countryName = this.getCountryNameFromUrl();
+    this.olympicService.loadInitialData().subscribe({
+      next: (data) => {
+        this.getCountryData();
+      },
+      error: (err) => {
+        console.error('Error loading initial Olympic data:', err);
+      }
+    });
+  }
+  
+  getCountryData(): void {
     this.subscription.add(
-      this.olympicService.getOlympics().subscribe({
-        next: (data: Olympic[]) => {
-          this.olympics = data;
-          this.countryName = this.router.url.split('/').pop() || ''; // Extract country name from the URL
-          this.countryName = decodeURIComponent(this.countryName)
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' '); // Properly format the country name
-          
-          // Fetch country data based on the country name
-          this.country = this.getDataByCountry(this.countryName);
-    
-          if (!this.country) {
+      this.olympicService.getCountryByName(this.countryName).subscribe({
+        next: (country: Country | undefined) => {
+          if (!country) {
             console.error(`No data found for country: ${this.countryName}`);
             return;
           }
-
-          // Populate the number of entries, total medals, total athletes, and chart data
-          this.numberOfEntries = this.getNumberOfEntries(this.country);
-          this.totalMedals = this.getTotalNumberOfMedals(this.country);
-          this.totalAthletes = this.getTotalNumberOfAthletes(this.country);
-          this.chartData = this.getChartData(this.country);
+  
+          this.country = country;
+          this.numberOfEntries = this.getNumberOfEntries(country);
+          this.totalMedals = this.getTotalNumberOfMedals(country);
+          this.totalAthletes = this.getTotalNumberOfAthletes(country);
+          this.chartData = this.getChartData(country);
         },
         error: (err) => {
-          console.error('Error occurred:', err); // Handle error if the subscription fails
+          console.error('Error occurred while fetching country data:', err);
         }
       })
     );
   }
+  
+
+  private getCountryNameFromUrl(): string {
+  const urlCountryName = this.router.url.split('/').pop() || '';
+  const formattedCountryName = decodeURIComponent(urlCountryName)
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+  return formattedCountryName;
+}
 
   /**
    * Fetch the data for the selected country based on its name.
