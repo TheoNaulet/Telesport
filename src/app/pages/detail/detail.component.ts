@@ -5,12 +5,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { StatComponent } from 'src/app/shared/stat/stat.component'; 
-import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component'; // Import du composant PageTitle
+import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component';
 import { Country } from 'src/app/core/models/Country';
 import { Participation } from 'src/app/core/models/Participation';
 import { Olympic } from 'src/app/core/models/Olympic';
 import {  LineChartData } from 'src/app/core/models/Chart-data';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-detail',
@@ -34,31 +34,34 @@ export class DetailComponent {
   public totalAthletes: number = 0;
   public chartData: LineChartData[] = [];
   public faArrowLeft = faArrowLeft;
-  constructor(private olympicService: OlympicService, private router : Router) {}
+  private subscription: Subscription = new Subscription(); 
 
+  constructor(private olympicService: OlympicService, private router : Router) {}
+  
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe({
-      next: (data) => {
-        this.olympics = data; 
-        this.countryName = this.router.url.split('/').pop() || ''; 
-        this.countryName = decodeURIComponent(this.countryName).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-        this.country = this.getDataByCountry(this.countryName);
-  
-        if (this.country.length === 0) {
-          console.error(`No data found for country: ${this.countryName}`);
-          this.country = null;
-          return;
+    this.subscription.add(
+      this.olympicService.getOlympics().subscribe({
+        next: (data: Olympic[]) => {
+          this.olympics = data; 
+          this.countryName = this.router.url.split('/').pop() || ''; 
+          this.countryName = decodeURIComponent(this.countryName).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+          this.country = this.getDataByCountry(this.countryName);
+    
+          if (!this.country) {
+            console.error(`No data found for country: ${this.countryName}`);
+            return;
+          }
+    
+          this.numberOfEntries = this.getNumberOfEntries(this.country);
+          this.totalMedals = this.getTotalNumberOfMedals(this.country);
+          this.totalAthletes = this.getTotalNumberOfAthletes(this.country);
+          this.chartData = this.getChartData(this.country);
+        },
+        error: (err) => {
+          console.error('Error occurred:', err);
         }
-  
-        this.numberOfEntries = this.getNumberOfEntries(this.country[0]);
-        this.totalMedals = this.getTotalNumberOfMedals(this.country[0]);
-        this.totalAthletes = this.getTotalNumberOfAthletes(this.country[0]);
-        this.chartData = this.getChartData(this.country[0]);
-      },
-      error: (err) => {
-        console.error('Error occurred:', err);
-      }
-    });
+      })
+    );
   }
 
   getDataByCountry(countryName: string): Country[] {
@@ -93,8 +96,11 @@ export class DetailComponent {
     ];
   }
 
-
   goBack(): void {
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

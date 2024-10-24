@@ -11,7 +11,7 @@ import {  PieChartData } from 'src/app/core/models/Chart-data';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { Country } from 'src/app/core/models/Country';
-
+import { Subscription } from 'rxjs'; 
 
 @Component({
   selector: 'app-home',
@@ -27,16 +27,19 @@ export class HomeComponent implements OnInit {
   public numberOfCountries: number = 0;
   public chartData: PieChartData[] = [];
   public faMedal = faMedal;
+  private subscription: Subscription = new Subscription(); 
 
   constructor(private olympicService: OlympicService, private router : Router) {}
 
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe((data) => {
-      this.olympics = data; 
-      this.numberOfJOs = this.getNumberOfJOs(); 
-      this.numberOfCountries = this.getNumberOfCountries();
-      this.chartData = this.getChartData();
-    });
+    this.subscription.add(
+      this.olympicService.getOlympics().subscribe((data: Olympic[]) => {
+        this.olympics = data;
+        this.numberOfJOs = this.getNumberOfJOs();
+        this.numberOfCountries = this.getNumberOfCountries();
+        this.chartData = this.getChartData();
+      })
+    );
   }
 
   getChartData(): PieChartData[] {
@@ -79,5 +82,9 @@ export class HomeComponent implements OnInit {
   onSelect(event: { name: string }): void {
     const countryName = event.name;
     this.router.navigate(['/detail', countryName.toLowerCase()]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
