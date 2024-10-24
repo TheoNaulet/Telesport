@@ -6,18 +6,9 @@
   
     <ng-container *ngIf="country; else noDataTemplate">
       <div class="statistics">
-        <div class="stat">
-          <p class="stat-title">Number of entries</p>
-          <p class="stat-value">{{ numberOfEntries }}</p>
-        </div>
-        <div class="stat">
-          <p class="stat-title">Total number medals</p>
-          <p class="stat-value">{{ totalMedals }}</p>
-        </div>
-        <div class="stat">
-          <p class="stat-title">Total number of athletes</p>
-          <p class="stat-value">{{ totalAthletes }}</p>
-        </div>
+        <app-stat [title]="'Number of entries'" [value]="numberOfEntries"></app-stat>
+        <app-stat [title]="'Total number medals'" [value]="totalMedals"></app-stat>
+        <app-stat [title]="'Total number of athletes'" [value]="totalAthletes"></app-stat>
       </div>
       <div class="chart">
         <ngx-charts-line-chart

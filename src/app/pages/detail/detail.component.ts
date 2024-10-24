@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
- import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-
+import { StatComponent } from 'src/app/shared/stat/stat.component'; 
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrl: './detail.component.scss',
+  styleUrls: ['./detail.component.scss'],
   standalone: true,
-  imports: [NgxChartsModule, FontAwesomeModule]
+  imports: [
+    NgxChartsModule,    
+    FontAwesomeModule,    
+    StatComponent       
+  ]
 })
 
 export class DetailComponent {
