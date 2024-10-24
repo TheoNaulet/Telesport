@@ -6,6 +6,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { StatComponent } from 'src/app/shared/stat/stat.component'; 
 import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component'; // Import du composant PageTitle
+import { Country } from 'src/app/core/models/Country';
+import { Participation } from 'src/app/core/models/Participation';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { ChartData } from 'src/app/core/models/Chart-data';
 
 
 @Component({
@@ -22,13 +26,13 @@ import { PageTitleComponent } from 'src/app/shared/page-title/page-title.compone
 })
 
 export class DetailComponent {
-  public olympics: Array<any> = []; 
+  public olympics: Olympic[] = []; 
   public country: any = {};
   public countryName: string = '';
   public numberOfEntries: number = 0;
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
-  public chartData: Array<any> = [];
+  public chartData: ChartData[] = [];
   public faArrowLeft = faArrowLeft;
   constructor(private olympicService: OlympicService, private router : Router) {}
 
@@ -57,29 +61,29 @@ export class DetailComponent {
     });
   }
 
-  getDataByCountry(countryName: string): any {
+  getDataByCountry(countryName: string): Country[] {
     const decodedCountryName = decodeURIComponent(countryName);
     return this.olympics.filter(olympic => olympic.country.toLowerCase() === decodedCountryName.toLowerCase());
 
   }
 
-  getNumberOfEntries(country: any): number {
+  getNumberOfEntries(country: Country): number {
     return country.participations.length;
   }
 
-  getTotalNumberOfMedals(country: any): number {
-    return country.participations.reduce((total: any, participation: { medalsCount: any; }) => total + participation.medalsCount, 0);
+  getTotalNumberOfMedals(country: Country): number {
+    return country.participations.reduce((total: number, participation: { medalsCount: number; }) => total + participation.medalsCount, 0);
   }
 
-  getTotalNumberOfAthletes(country: any): number {
-    return country.participations.reduce((total: any, participation: { athleteCount: any; }) => total + participation.athleteCount, 0);
+  getTotalNumberOfAthletes(country: Country): number {
+    return country.participations.reduce((total: number, participation: { athleteCount: number; }) => total + participation.athleteCount, 0);
   }
 
-  getChartData(country: any): any[] {
+  getChartData(country: Country): ChartData[]  {
     return [
       {
         name: country.country,
-        series: country.participations.map((participation: any) => {
+        series: country.participations.map((participation: Participation) => {
           return {
             name: participation.year.toString(),
             value: participation.medalsCount
