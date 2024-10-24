@@ -9,7 +9,7 @@ import { PageTitleComponent } from 'src/app/shared/page-title/page-title.compone
 import { Country } from 'src/app/core/models/Country';
 import { Participation } from 'src/app/core/models/Participation';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { LineChartData } from 'src/app/core/models/Chart-data';
+import { LineChartData } from 'src/app/core/models/Line-chart';
 import { Subscription } from 'rxjs';
 
 @Component({
