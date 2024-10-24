@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatComponent } from 'src/app/shared/stat/stat.component';
 import { PageTitleComponent } from 'src/app/shared/page-title/page-title.component';
 import { PieChartData } from 'src/app/core/models/Chart-data';
-import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { Country } from 'src/app/core/models/Country';
 import { Subscription } from 'rxjs'; 
