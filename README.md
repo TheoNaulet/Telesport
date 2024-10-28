@@ -33,7 +33,6 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
    ```bash
    cd olympic-dashboard
 
-
 3. **Installez les dépendances** :
    ```bash
    npm install
