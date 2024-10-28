@@ -1,29 +1,94 @@
-# OlympicGamesStarter
+# 📊 Tableau de Bord Olympique Interactif
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+Bienvenue dans le projet de **Tableau de Bord Olympique Interactif** ! 🏅 Ce projet, développé pour **TéléSport**, permet de visualiser les informations des précédents Jeux Olympiques de manière interactive et accessible.
 
-Don't forget to install your node_modules before starting (`npm install`).
+---
 
-## Development server
+## 📋 Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Ce tableau de bord propose :
+- La visualisation du **nombre de médailles par pays** 🥇.
+- Des statistiques interactives sur les précédents Jeux Olympiques 🌎.
+- Une expérience fluide sur mobile et desktop 📱💻.
 
-## Build
+## 🎯 Objectifs
+Le but de ce projet est d’offrir aux utilisateurs un outil visuel et engageant pour suivre et explorer l’historique olympique de chaque pays participant. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Where to start
+## 🚀 Installation et Démarrage
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+### Prérequis
+Avant de commencer, assurez-vous d'avoir installé les outils suivants :
+- **Node.js** (version 14+)
+- **Angular CLI** (version 12+)
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+### Étapes d'Installation
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+1. **Clonez le projet** :
+   ```bash
+   git clone https://github.com/TheoNaulet/Telesport.git
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+2. **Accédez au répertoire** :
+   ```bash
+   cd olympic-dashboard
 
-You're now ready to implement the requested features.
 
-Good luck!
+3. **Installez les dépendances** :
+   ```bash
+   npm install
+
+4. **Lancez l'application en mode développement** :
+   ```bash
+   ng serve
+
+---
+
+## 📂 Structure du Projet
+
+- `src/app/core`: Contient les services et les modèles principaux.
+- `src/app/shared`: Contient les composants réutilisables (`StatComponent`, `PageTitleComponent`).
+- `src/app/home`: Page d'accueil du tableau de bord.
+- `src/app/detail`: Page détaillée pour chaque pays.
+
+---
+
+## 🌐 Fonctionnalités
+
+- **Visualisation des données olympiques** 🏆 via des graphiques interactifs.
+- **Navigation détaillée par pays** 🌍 pour explorer les performances de chaque nation.
+- **Responsive** : Adapté pour une utilisation mobile et desktop 📲.
+
+---
+
+## ⚙️ Technologies Utilisées
+
+- **Angular** 🅰️
+- **ngx-charts** 📊 pour les graphiques
+- **RxJS** 🔁 pour la gestion des observables
+- **FontAwesome** 🌟 pour les icônes
+
+---
+
+## 💡 Bonnes Pratiques Suivies
+
+- **Conventionnal Commits** : Des commits structurés pour une meilleure lisibilité.
+- **Typage TypeScript** : Interfaces définies pour assurer la cohérence des données.
+- **Documentation JSDoc** : Des commentaires pour une documentation interne claire.
+- **Branche Dev** : Travail en branche dédiée pour maintenir la stabilité du projet principal.
+
+---
+
+## 📜 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+---
+
+## 👥 Contributeurs
+
+- [Théo Naulet](https://github.com/TheoNaulet)
+
+---
+
+**Merci de votre visite !** 🌍 N'hésitez pas à cloner le projet, l'adapter à vos besoins, et m’envoyer vos retours ou idées !
