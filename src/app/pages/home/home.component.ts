@@ -95,14 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   
   /**
-   * Navigates to the detail page.
-   * This is triggered when the user clicks a button or element that triggers the navigation.
-   */
-  goToDetail(): void {
-    this.router.navigate(['/detail']);
-  }
-
-  /**
    * Handles the event when a user selects a country in the chart.
    * It navigates to the detail page of the selected country.
    * @param event - The event containing the selected country's name.
