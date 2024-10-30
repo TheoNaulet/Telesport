@@ -1,18 +1,19 @@
 <div class="medals-container">
-    <h2 class="title">Medals per Country</h2>
+    <app-page-title [title]="'Medals per Country'"></app-page-title>
     <div class="statistics">
-        <div class="stat">
-            <p class="stat-title">Number of JOs</p>
-            <p class="stat-value">10</p>
-        </div>
-        <div class="stat">
-            <p class="stat-title">Number of countries</p>
-            <p class="stat-value">10</p>
-        </div>
+        <app-stat [title]="'Number of JOs'" [value]="numberOfJOs"></app-stat>
+        <app-stat [title]="'Number of countries'" [value]="numberOfCountries"></app-stat>
     </div>
-    <button (click)="goToDetail()">Go to Detail Page</button>
     <div class="chart">
-        <div class="pie-chart">
-        </div>
+        <ngx-charts-pie-chart [view]="[700, 400]" [results]="chartData" [labels]="true" [trimLabels]="false" [animations]="false" (select)="onSelect($event)">
+            <ng-template #tooltipTemplate let-model="model">
+                <div class="tooltip">
+                    <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
+                    <br>
+                    <fa-icon [icon]="faMedal" class="p-2" style="font-size: large;"></fa-icon>
+                    <span style="font-weight: bold; font-size: large;">{{model.value}}</span>
+                </div>
+            </ng-template>
+        </ngx-charts-pie-chart>
     </div>
 </div>

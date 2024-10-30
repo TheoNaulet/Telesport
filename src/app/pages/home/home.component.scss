@@ -3,41 +3,13 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    .title {
-        font-size: 24px;
-        font-weight: bold;
-        color: white;
-        background-color: rgb(1, 131, 143);
-        margin-bottom: 20px;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
     .statistics {
         display: flex;
         gap: 20px;
         margin-bottom: 30px; 
-        .stat {
-            padding: 5px 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid rgb(1, 131, 143);
-            .stat-title {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-            }
-            .stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: black;
-            }
-        }
     }
         .chart {
         position: relative;
-        width: 300px;
-        height: 300px;
         margin-bottom: 20px;
-        background-color: #eaf7f7;
-    }
+    }    
 }

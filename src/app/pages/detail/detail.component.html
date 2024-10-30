@@ -1,27 +1,34 @@
 <div class="detail-container">
-    <button class="back-button" (click)="goBack()"><--</button>
-    <h2 class="country-name">Name of the country</h2>
-    <div class="statistics">
-      <div class="stat">
-        <p class="stat-title">Number of entries</p>
-        <p class="stat-value">3</p>
-      </div>
-      <div class="stat">
-        <p class="stat-title">Total number medals</p>
-        <p class="stat-value">5</p>
-      </div>
-      <div class="stat">
-        <p class="stat-title">Total number of athletes</p>
-        <p class="stat-value">32</p>
-      </div>
-    </div>
-  
-    <div class="chart-container">
-      <div class="chart-placeholder">
-        <p>Chart</p>
-      </div>
-    </div>
-  
-    <p class="chart-caption">Dates</p>
-  </div>
-  
+    <a class="back-button" (click)="goBack()">
+        <fa-icon [icon]="faArrowLeft" class="p-2" style="font-size: large;"></fa-icon>
+    </a>
+    <app-page-title [title]="countryName"></app-page-title>
+    <ng-container *ngIf="country; else noDataTemplate">
+        <div class="statistics">
+            <app-stat [title]="'Number of entries'" [value]="numberOfEntries"></app-stat>
+            <app-stat [title]="'Total number medals'" [value]="totalMedals"></app-stat>
+            <app-stat [title]="'Total number of athletes'" [value]="totalAthletes"></app-stat>
+        </div>
+        <div class="chart">
+            <ngx-charts-line-chart
+                [view]="[viewWidth, 400]"  
+                [results]="chartData"
+                [legend]="false"
+                [xAxis]="true"
+                [yAxis]="true"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Dates'"
+                [yAxisLabel]="'Number of medals'"
+                [autoScale]="true"
+                [yScaleMin]="-10"
+                [yScaleMax]="200"
+                [timeline]="false"
+            />
+        </div>
+    </ng-container>
+
+    <ng-template #noDataTemplate>
+        <p class="error-message">No data available for {{ countryName }}.</p>
+    </ng-template>
+</div>
