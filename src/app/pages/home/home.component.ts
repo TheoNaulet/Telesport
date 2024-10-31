@@ -39,10 +39,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.olympicService.getOlympics().subscribe((data: Country[] | null) => {
         if (data) {
-          this.olympics = data; // 'data' est typé en 'Olympic[]'
-          this.numberOfJOs = this.getNumberOfJOs(); // Calculer le nombre de JO
-          this.numberOfCountries = this.getNumberOfCountries(); // Calculer le nombre de pays participants
-          this.chartData = this.getChartData(); // Préparer les données pour le graphique
+          this.olympics = data; // 'data' est typé en 'Country[]'
+          this.numberOfJOs = this.getNumberOfJOs(); // Calculate the number of Olympic Games
+          this.numberOfCountries = this.getNumberOfCountries(); // Calculate the number of countries
+          this.chartData = this.getChartData(); // Prepare the data for the pie chart
         }
       })
     );
@@ -94,14 +94,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     return yearsOfJOs.length; // Return the total number of unique Olympic years
   }
   
-  /**
-   * Navigates to the detail page.
-   * This is triggered when the user clicks a button or element that triggers the navigation.
-   */
-  goToDetail(): void {
-    this.router.navigate(['/detail']);
-  }
-
   /**
    * Handles the event when a user selects a country in the chart.
    * It navigates to the detail page of the selected country.

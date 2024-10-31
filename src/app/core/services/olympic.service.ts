@@ -63,10 +63,10 @@ export class OlympicService {
       switchMap((data: Country[] | null) => {
         if (!data) {
           return this.loadInitialData().pipe(
-            map(() => this.olympics$.getValue()) // Récupère les données après le chargement
+            map(() => this.olympics$.getValue()) // Get the data after loading
           );
         }
-        return of(data); // Les données sont déjà disponibles, on les renvoie
+        return of(data); // Data is already loaded
       }),
       map((data: Country[] | null) => {
         if (!data) {
