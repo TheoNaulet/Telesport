@@ -78,12 +78,6 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
 ---
 
-## 📜 Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
----
-
 ## 👥 Contributeurs
 
 - [Théo Naulet](https://github.com/TheoNaulet)
