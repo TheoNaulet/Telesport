@@ -31,7 +31,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
 2. **Accédez au répertoire** :
    ```bash
-   cd olympic-dashboard
+   cd Developpez-le-front-end-en-utilisant-Angular
 
 3. **Installez les dépendances** :
    ```bash
