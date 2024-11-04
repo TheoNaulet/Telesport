@@ -31,7 +31,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
 2. **Accédez au répertoire** :
    ```bash
-   cd Developpez-le-front-end-en-utilisant-Angular
+   cd Telesport
 
 3. **Installez les dépendances** :
    ```bash
